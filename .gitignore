@@ -6,3 +6,5 @@ build
 .idea
 
 gradle
+
+/src/main/resources/setup.properties

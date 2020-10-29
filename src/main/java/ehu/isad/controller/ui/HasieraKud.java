@@ -1,14 +1,9 @@
-package ehu.isad.controllers.ui;
+package ehu.isad.controller.ui;
 
 import ehu.isad.Eurobisioa;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,7 +20,7 @@ public class HasieraKud implements Initializable {
     }
 
     @FXML
-    void onClick(ActionEvent event) {
+    void onClick() throws Exception {
         btnBozkatu.setDisable(true);
         mainApp.aukeratuErakutsi();
     }

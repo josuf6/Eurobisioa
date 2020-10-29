@@ -1,15 +1,12 @@
-package ehu.isad.controllers.ui;
+package ehu.isad.controller.ui;
 
 import ehu.isad.Eurobisioa;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AukeratuKud implements Initializable {
+public class BozkPanelaKud implements Initializable {
 
     private Eurobisioa mainApp;
 
