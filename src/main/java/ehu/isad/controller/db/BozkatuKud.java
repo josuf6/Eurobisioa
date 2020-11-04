@@ -14,7 +14,7 @@ public class BozkatuKud {
     private BozkatuKud() {}
 
     public boolean bozkatuDu(String pHerrialdeIzen) {
-        String query = "select izena from Bozkaketa b, Herrialde h where izena='" + pHerrialdeIzen + "' and urtea=(select strftime('%Y','now')) and b.bozkatuDu=izena";
+        String query = "select izena from Bozkaketa b, Herrialde h where izena='" + pHerrialdeIzen + "' and urtea=(select strftime('%Y','now')) and bozkatuDu=izena";
         ResultSet rs = DBKud.getDBKud().execSQL(query);
         try {
             if (rs.next()) return true;
