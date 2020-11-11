@@ -65,11 +65,13 @@ public class Eurobisioa extends Application {
     }
 
     public void bozkPanelaErakutsi(Herrialdea pHerrialdea) throws Exception {
-        this.bozkPanelaPantailaKargatu();
-        stage.setScene(new Scene(bozkPanelaUI, 600, 500));
+        this.bozkPanelaPantailaKargatu(pHerrialdea);
+        bozkPanelaKud.setHerrialdeBozkatu(pHerrialdea.getIzena());
+        bozkPanelaKud.setTestua();
+        stage.setScene(new Scene(bozkPanelaUI, 600, 400));
         Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
         stage.setX((primScreenBounds.getWidth() - 600) / 2);
-        stage.setY((primScreenBounds.getHeight() - 500) /3);
+        stage.setY((primScreenBounds.getHeight() - 400) /3);
         stage.show();
     }
 
@@ -94,7 +96,7 @@ public class Eurobisioa extends Application {
         erroreaKud.setMainApp(this);
     }
 
-    private void bozkPanelaPantailaKargatu() throws IOException {
+    private void bozkPanelaPantailaKargatu(Herrialdea pHerrialdea) throws IOException {
         FXMLLoader loaderBozkPanela = new FXMLLoader(getClass().getResource("/BozkPanela.fxml"));
         bozkPanelaUI = (Parent) loaderBozkPanela.load();
         bozkPanelaKud = loaderBozkPanela.getController();

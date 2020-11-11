@@ -13,6 +13,10 @@ public class Herrialdea {
         return izena;
     }
 
+    public String getBandera() {
+        return bandera;
+    }
+
     @Override
     public String toString() {
         return izena;
