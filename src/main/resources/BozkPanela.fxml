@@ -7,21 +7,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.controller.ui.BozkPanelaKud">
-   <children>
-      <Label fx:id="lblTestua" layoutX="54.0" layoutY="34.0" maxWidth="200.0" text="(e)k horrela nahi ditu bere puntuak banatu:" wrapText="true" />
-      <TableView fx:id="tbBozkaketak" layoutY="90.0" prefHeight="220.0" prefWidth="600.0">
-        <columns>
-          <TableColumn fx:id="bandera" prefWidth="49.0" />
-          <TableColumn fx:id="herrialdea" prefWidth="191.0" text="Herrialdea" />
-            <TableColumn fx:id="artista" prefWidth="75.0" text="Artista" />
-            <TableColumn fx:id="abestia" prefWidth="75.0" text="Abestia" />
-            <TableColumn fx:id="puntuak" prefWidth="75.0" text="Puntuak" />
-        </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-      </TableView>
-      <Label fx:id="lblInfo" layoutX="54.0" layoutY="332.0" text="Label" />
-      <Button fx:id="btnAdos" disable="true" layoutX="275.0" layoutY="360.0" mnemonicParsing="false" text="Ados" />
-   </children>
+    <children>
+        <Label fx:id="lblTestua" layoutX="54.0" layoutY="34.0" maxWidth="200.0" text="(e)k horrela nahi ditu bere puntuak banatu:" wrapText="true" />
+        <TableView fx:id="tbBozkaketak" layoutY="90.0" prefHeight="220.0" prefWidth="600.0">
+            <columns>
+                <TableColumn fx:id="bandera" prefWidth="49.0" />
+                <TableColumn fx:id="herrialdea" prefWidth="191.0" text="Herrialdea" />
+                <TableColumn fx:id="artista" prefWidth="75.0" text="Artista" />
+                <TableColumn fx:id="abestia" prefWidth="75.0" text="Abestia" />
+                <TableColumn fx:id="puntuak" prefWidth="75.0" text="Puntuak" />
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+        </TableView>
+        <Label fx:id="lblInfo" layoutX="54.0" layoutY="332.0" />
+        <Button fx:id="btnAdos" disable="true" layoutX="316.0" layoutY="360.0" mnemonicParsing="false" onAction="#onClickAdos" text="Ados" />
+        <Button fx:id="btnAtzera" layoutX="235.0" layoutY="360.0" mnemonicParsing="false" onAction="#onClickAtzera" text="Atzera" />
+    </children>
 </AnchorPane>

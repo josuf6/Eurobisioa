@@ -1,22 +1,16 @@
 package ehu.isad.model;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+public class BozkatuModel {
 
-public class HerrialdeModel {
-
-    private Image bandera;
-    private String herrialdea;
-    private String artista;
-    private String abestia;
+    private final Image bandera;
+    private final String herrialdea;
+    private final String artista;
+    private final String abestia;
     private Integer puntuak;
 
-    private String imagePath;
-
-    public HerrialdeModel(String pImagePath, String pHerrialdea, String pArtista, String pAbestia) {
+    public BozkatuModel(String pImagePath, String pHerrialdea, String pArtista, String pAbestia) {
         this.bandera = new Image(pImagePath);
         this.herrialdea = pHerrialdea;
         this.artista = pArtista;

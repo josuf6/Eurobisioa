@@ -1,8 +1,7 @@
 package ehu.isad.controller.ui;
 
 import ehu.isad.Eurobisioa;
-import ehu.isad.controller.db.BozkatuKud;
-import ehu.isad.controller.db.HerrialdeKud;
+import ehu.isad.controller.db.EurobisioDBKud;
 import ehu.isad.model.Herrialdea;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -31,7 +30,7 @@ public class AukeratuKud implements Initializable {
     void onClick() throws Exception {
         btnAdos.setDisable(true);
         Herrialdea herrialdea = comboHerrialdeak.getValue();
-        if (BozkatuKud.getBozkatuKud().bozkatuDu(herrialdea.getIzena())) {
+        if (EurobisioDBKud.getEurobisioDBKud().bozkatuDu(herrialdea.getIzena())) {
             mainApp.erroreaErakutsi(herrialdea.getIzena());
         }
         else mainApp.bozkPanelaErakutsi(herrialdea);
@@ -47,7 +46,7 @@ public class AukeratuKud implements Initializable {
     }
 
     private void herrialdeakSartu() {
-        ObservableList<Herrialdea> herrialdeList = HerrialdeKud.getHerrialdeKud().getHerrialdeak();
+        ObservableList<Herrialdea> herrialdeList = EurobisioDBKud.getEurobisioDBKud().getHerrialdeak();
         comboHerrialdeak.setItems(herrialdeList);
     }
 }

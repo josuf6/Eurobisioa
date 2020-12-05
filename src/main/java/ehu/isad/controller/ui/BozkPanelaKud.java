@@ -1,9 +1,8 @@
 package ehu.isad.controller.ui;
 
 import ehu.isad.Eurobisioa;
-import ehu.isad.controller.db.BozkatuKud;
-import ehu.isad.model.HerrialdeModel;
-import ehu.isad.model.Herrialdea;
+import ehu.isad.controller.db.EurobisioDBKud;
+import ehu.isad.model.BozkatuModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,6 +18,7 @@ import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class BozkPanelaKud implements Initializable {
@@ -27,22 +27,22 @@ public class BozkPanelaKud implements Initializable {
     private Label lblTestua;
 
     @FXML
-    private TableView<HerrialdeModel> tbBozkaketak;
+    private TableView<BozkatuModel> tbBozkaketak;
 
     @FXML
-    private TableColumn<HerrialdeModel, Image> bandera;
+    private TableColumn<BozkatuModel, Image> bandera;
 
     @FXML
-    private TableColumn<HerrialdeModel, String> herrialdea;
+    private TableColumn<BozkatuModel, String> herrialdea;
 
     @FXML
-    private TableColumn<HerrialdeModel, String> artista;
+    private TableColumn<BozkatuModel, String> artista;
 
     @FXML
-    private TableColumn<HerrialdeModel, String> abestia;
+    private TableColumn<BozkatuModel, String> abestia;
 
     @FXML
-    private TableColumn<HerrialdeModel, Integer> puntuak;
+    private TableColumn<BozkatuModel, Integer> puntuak;
 
     @FXML
     private Label lblInfo;
@@ -50,12 +50,41 @@ public class BozkPanelaKud implements Initializable {
     @FXML
     private Button btnAdos;
 
+    @FXML
+    private Button btnAtzera;
+
     private Eurobisioa mainApp;
+    private ArrayList<BozkatuModel> ordezkaritzak;
     private String herrialdeBozkatu;
     private int puntuFalta;
 
     public void setMainApp(Eurobisioa main) {
         mainApp = main;
+    }
+
+    @FXML
+    void onClickAdos() throws Exception {
+        btnAdos.setDisable(true);
+        ArrayList<BozkatuModel> bozkaketak = this.getBozkaketak();
+        for (BozkatuModel bozkaketa : bozkaketak) {
+            EurobisioDBKud.getEurobisioDBKud().bozkaketaGorde(bozkaketa.getHerrialdea(), this.herrialdeBozkatu, bozkaketa.getPuntuak());
+            EurobisioDBKud.getEurobisioDBKud().ordezkaritzaEguneratu(bozkaketa.getHerrialdea(), bozkaketa.getPuntuak());
+        }
+        mainApp.rankingErakutsi();
+    }
+
+    @FXML
+    void onClickAtzera() throws Exception {
+        btnAtzera.setDisable(true);
+        mainApp.aukeratuErakutsi();
+    }
+
+    private ArrayList<BozkatuModel> getBozkaketak() {
+        ArrayList<BozkatuModel> bozkaketak = new ArrayList<>();
+        for (BozkatuModel bozkatuModel : this.ordezkaritzak) {
+            if (bozkatuModel.getPuntuak() > 0) bozkaketak.add(bozkatuModel);
+        }
+        return bozkaketak;
     }
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -79,28 +108,24 @@ public class BozkPanelaKud implements Initializable {
                 }
         );
 
-        this.bozkTaulaSortu(this.herrialdeBozkatu);
+        this.bozkTaulaSortu();
 
-        Callback<TableColumn<HerrialdeModel, Integer>, TableCell<HerrialdeModel, Integer>> defaultTextFieldCellFactory
-                = TextFieldTableCell.<HerrialdeModel, Integer>forTableColumn(new IntegerStringConverter());
+        Callback<TableColumn<BozkatuModel, Integer>, TableCell<BozkatuModel, Integer>> defaultTextFieldCellFactory
+                = TextFieldTableCell.<BozkatuModel, Integer>forTableColumn(new IntegerStringConverter());
 
         puntuak.setCellFactory(col -> {
-            TableCell<HerrialdeModel, Integer> cell = defaultTextFieldCellFactory.call(col);
+            TableCell<BozkatuModel, Integer> cell = defaultTextFieldCellFactory.call(col);
 
             cell.setOnMouseClicked(event -> {
                 if (! cell.isEmpty()) {
-                    if (cell.getTableView().getSelectionModel().getSelectedItem().getHerrialdea().equals(this.herrialdeBozkatu)) {
-                        cell.setEditable(false);
-                    }else {
-                        cell.setEditable(true);
-                    }
+                    cell.setEditable(!cell.getTableView().getSelectionModel().getSelectedItem().getHerrialdea().equals(this.herrialdeBozkatu));
                 }
             });
 
             return cell ;
         });
 
-        bandera.setCellValueFactory(new PropertyValueFactory<HerrialdeModel, Image>("Bandera"));
+        bandera.setCellValueFactory(new PropertyValueFactory<>("Bandera"));
 
         bandera.setCellFactory(p -> new TableCell<>() {
             public void updateItem(Image image, boolean empty) {
@@ -115,7 +140,7 @@ public class BozkPanelaKud implements Initializable {
                     setGraphic(null);
                     setText(null);
                 }
-            };
+            }
         });
 
         this.puntuFalta = 5;
@@ -141,7 +166,7 @@ public class BozkPanelaKud implements Initializable {
                     lblInfo.setText("Puntu bat falta da banatzeko");
                     lblInfo.setTextFill(Color.BLACK);
                 } else if (puntuFalta < 0) {
-                    int zenbatSoberan = 0 - puntuFalta;
+                    int zenbatSoberan = -puntuFalta;
                     lblInfo.setText("Ezin dira 5 baino puntu gehiago banatu. " + zenbatSoberan + " puntu daude soberan");
                     lblInfo.setTextFill(Color.RED);
                 }
@@ -150,16 +175,17 @@ public class BozkPanelaKud implements Initializable {
     }
 
     private boolean negatiboDago() {
-        ObservableList<HerrialdeModel> herrialdeModels = tbBozkaketak.getItems();
-        for (HerrialdeModel herrialdeModel : herrialdeModels) {
-            if (herrialdeModel.getPuntuak() < 0) return true;
+        ObservableList<BozkatuModel> bozkatuModels = tbBozkaketak.getItems();
+        for (BozkatuModel bozkatuModel : bozkatuModels) {
+            if (bozkatuModel.getPuntuak() < 0) return true;
         }
         return false;
     }
 
-    private void bozkTaulaSortu(String pHerrialdea) {
-        ObservableList<HerrialdeModel> herrialdeModels = BozkatuKud.getBozkatuKud().getHerrialdeModel();
-        tbBozkaketak.setItems(herrialdeModels);
+    private void bozkTaulaSortu() {
+        ordezkaritzak = EurobisioDBKud.getEurobisioDBKud().getBozkatuModel();
+        ObservableList<BozkatuModel> ordezkaritzakObs = FXCollections.observableArrayList(ordezkaritzak);
+        tbBozkaketak.setItems(ordezkaritzakObs);
     }
 
     public void setHerrialdeBozkatu(String herrialdeBozkatu) {

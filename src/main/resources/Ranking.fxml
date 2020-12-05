@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="150.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ehu.isad.controller.ui.RankingKud">
+    <children>
+        <ImageView fx:id="imgHerrialde1" fitHeight="15.0" fitWidth="20.0" layoutX="46.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" />
+        <Label fx:id="lblHerrialde1" layoutX="82.0" layoutY="44.0" text="Label" />
+        <ImageView fx:id="imgHerrialde2" fitHeight="15.0" fitWidth="20.0" layoutX="46.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true" />
+        <Label fx:id="lblHerrialde2" layoutX="82.0" layoutY="64.0" text="Label" />
+        <ImageView fx:id="imgHerrialde3" fitHeight="15.0" fitWidth="20.0" layoutX="46.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true" />
+        <Label fx:id="lblHerrialde3" layoutX="82.0" layoutY="83.0" text="Label" />
+        <Button fx:id="btnAdos" layoutX="100.0" layoutY="110.0" mnemonicParsing="false" onAction="#onClick" text="Ados" />
+        <Label layoutX="15.0" layoutY="14.0" text="Top 3:">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>
